@@ -10,55 +10,31 @@ public class Promotion {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private Long orderId;
-    private Double point;
-    private String process;
-
-    @PrePersist
-    public void onPrePersist() {
-        System.out.println("promotion pre persist");
-    }
+    private Long id; // 프로모션ID
+    private Long orderId; // 주문ID
+    private Double point; // 페이백 포인트
+    private String process; // 상태
 
     @PostPersist
     public void onPostPersist(){
-        System.out.println(this.toString());
-        System.out.println("promotion persist");
 
         if("Payed".equals(process) && point > 0){
-            // 결제 완료된 이벤트를 통해 프로모션 제공 완료 처리
+            System.out.println("*** 결제 완료 -> 포인트 적립 ***");
 
+            // 결제 완료된 이벤트리스너를 통해 페이백 포인트 제공
             PromoCompleted promoCompleted = new PromoCompleted();
             BeanUtils.copyProperties(this, promoCompleted);
             promoCompleted.publish();
 
-            System.out.println("*** 프로모션 포인트 제공 완료 ***");
+            System.out.println("*** 프로모션 - 페이백 포인트 제공 완료 ***");
+
+
         } else if("PayCancelled".equals(process)){
             PromoCancelled promoCancelled = new PromoCancelled();
             BeanUtils.copyProperties(this, promoCancelled);
             promoCancelled.publish();
             System.out.println("*** 결제 취소로 인한 프로모션 포인트 제공 회수 ***");
         }
-    }
-
-    @PreUpdate
-    public void onPreUpdate(){
-        System.out.println("promotion pre update");
-    }
-
-    @PostUpdate
-    public void onPostUpdate(){
-        System.out.println("promotion post update");
-    }
-
-    @PreRemove
-    public void onPreRemove(){
-        System.out.println("promotion pre remove");
-    }
-
-    @PostRemove
-    public void onPostRemove(){
-        System.out.println("promotion post remove");
     }
 
     public Long getId() {

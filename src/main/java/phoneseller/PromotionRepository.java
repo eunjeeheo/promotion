@@ -9,3 +9,8 @@ public interface PromotionRepository extends PagingAndSortingRepository<Promotio
     Optional<Promotion> findByOrderId(Long orderId);
 
 }
+
+
+
+
+
