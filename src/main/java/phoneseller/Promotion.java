@@ -32,7 +32,7 @@ public class Promotion {
         } else if("PayCancelled".equals(process)){
 
             try {
-                Thread.currentThread().sleep((long) (3000));
+                Thread.currentThread().sleep((long) (1000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
