@@ -15,6 +15,16 @@ public class Promotion {
     private Double point; // 페이백 포인트
     private String process; // 상태
 
+    @PrePersist
+    public void onPrePersist(){
+
+        try {
+            Thread.currentThread().sleep((long) (3000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @PostPersist
     public void onPostPersist(){
 
@@ -30,12 +40,6 @@ public class Promotion {
 
 
         } else if("PayCancelled".equals(process)){
-
-            try {
-                Thread.currentThread().sleep((long) (1000));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             PromoCancelled promoCancelled = new PromoCancelled();
             BeanUtils.copyProperties(this, promoCancelled);
