@@ -19,7 +19,7 @@ public class Promotion {
     public void onPrePersist(){
 
         try {
-            Thread.currentThread().sleep((long) (3000));
+            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
