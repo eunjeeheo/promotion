@@ -30,6 +30,13 @@ public class Promotion {
 
 
         } else if("PayCancelled".equals(process)){
+
+            try {
+                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             PromoCancelled promoCancelled = new PromoCancelled();
             BeanUtils.copyProperties(this, promoCancelled);
             promoCancelled.publish();
